@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-var FavSchema = mongoose.Schema;({
+var favSchema = mongoose.Schema;({
    userId: {
     type: String,
     required: true,
@@ -16,5 +16,5 @@ var FavSchema = mongoose.Schema;({
     }
 });
 
-var Favorite = mongoose.model('Favorite', FavSchema);
+var Favorite = mongoose.model('Favorite', favSchema);
 module.exports = Favorite;

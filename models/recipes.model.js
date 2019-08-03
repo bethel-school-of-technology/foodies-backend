@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 
-var RecSchema = mongoose.Schema;({
+var recSchema =  new Schema;({
     id: {
     type: String,
     required: true,
@@ -15,5 +15,5 @@ var RecSchema = mongoose.Schema;({
     }
 });
 
-var Recipes = mongoose.model('Recipes', RecSchema);
+var Recipes = mongoose.model('Recipes', recSchema);
 module.exports = Recipes;
