@@ -1,26 +1,32 @@
 var express = require('express');
 var router = express.Router();
 
+var Users = require('../models/users');
+
 //Sign up (CREATE user)
 
-router.post('/api/users', function(req, res, next) {
-    res.send('respond with a resource');
+router.post('/signup', function(req, res, next) {
+    const user = new Users({
+        username: req.body.username,
+        password: req.body.password,
+        email: req.body.email
+    })
   });
 
 //Log in 
 
-router.post('/api/users/login', function(req, res, next) {
+router.post('/login', function(req, res, next) {
     res.send('respond with a resource');
   });
 
 //GET profile page
-router.get('/api/users/profile', function(req, res, next) {
+router.get('/profile/:id', function(req, res, next) {
     res.send('respond with a resource');
   });
 
 //log out
 
-router.post('/api/users/logout', function(req, res, next) {
+router.post('/logout', function(req, res, next) {
     res.send('respond with a resource');
   });
 

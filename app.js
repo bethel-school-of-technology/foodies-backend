@@ -8,7 +8,8 @@ var bodyParser = require('body-parser');
 const mongoose = require("mongoose");
 var indexRouter = require('./routes/index');
 var recipesRouter = require('./routes/personalRecipes');
-// var favoriteRouter = require('./routes/favoriteRecipes');
+var usersRouter = require('./routes/users');
+var favoriteRouter = require('./routes/favoriteRecipes');
 
 var app = express();
 
@@ -46,10 +47,9 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/recipes', recipesRouter);
-// app.use('/favoriteRecipes', favoriteRouter);
-// /api/users 
-// /api/recipes
+app.use('/api/personalRecipes', recipesRouter);
+app.use('/api/users', usersRouter);
+app.use('/api/favoriteRecipes', favoriteRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
