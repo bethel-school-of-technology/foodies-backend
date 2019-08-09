@@ -1,12 +1,14 @@
 var express = require('express');
 var router = express.Router();
 
+const checkAuth = require("../middleware/check-auth");
+
 
 const PersonalRecipes = require('../models/Recipes');
 
 //GET list of Personal Recipes
 
-router.get('/all', (req, res, next) => {
+router.get('/all', checkAuth, (req, res, next) => {
   PersonalRecipes.find().then(documents => {
     res.status(200).json({
       message: "Recipes fetched successfully",
@@ -33,7 +35,7 @@ router.post("/createRecipe", (req, res, next) => {
 
 //Get one personal Recipe
 
-router.get("/:id", (req, res, next) => {
+router.get("/:id", checkAuth, (req, res, next) => {
   PersonalRecipe.findById(req.params._id).then(recipe => {
     if (recipe) {
       res.status(200).json(recipe);
@@ -45,12 +47,12 @@ router.get("/:id", (req, res, next) => {
 
 //DELETE a personal recipe
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', checkAuth, (req, res) => {
   PersonalRecipes.deleteOne({ _id: req.params.id }).then(result => {
     console.log(result);
     res.status(200).json({ message: "Recipe Deleted!" });
   });
-})
+});
 
 
 module.exports = router;
