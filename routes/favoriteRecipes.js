@@ -8,8 +8,8 @@ const favoriteRecipes = require('../models/favoriteRecipes');
 router.get("/all", (request, response, next) => {
     // you know who's the authenticated user. --> you can get the user id
     // query the likedrecicpies document, where the user_id = authenticated user. 
-    // let favs = [{user_id, recipe_id}, {user_id, recipe_id}]
-    // loop over "favs", for each recipe_id, make an api call to the public reciupies endpoint. 
+    // let favs = [{user_id: userId, RecipeId = recipe_id}, {user_id, recipe_id}]
+    // loop over "favs", for each recipe_id, make an api call to the public recipes endpoint. 
     // save all the values in some array or collection. 
     // return the array/collection 
   

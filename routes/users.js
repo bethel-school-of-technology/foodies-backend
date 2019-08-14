@@ -8,7 +8,20 @@ var Users = require('../models/users');
 
 //Sign up (CREATE user)
 
-router.post('/signup', function(req, res, next) {
+router.post('/test', (req, res) => {
+    const user = new Users({
+        username: req.body.username,
+        password: req.body.password,
+        email: req.body.email
+    });
+    user.save((err, response)=>{
+        if(err) res.status(400).send(err)
+        res.status(200).send(response)
+    });
+    console.log(user);
+})
+
+router.post('/signup', (req, res) => {
     bcrypt.hash(req.body.password, 10)
     .then(hash => {
         const user = new Users({
@@ -16,20 +29,36 @@ router.post('/signup', function(req, res, next) {
             password: hash,
             email: req.body.email
         });
-        user.save()
-        .then(result => {
-            res.status(201).json({
-                message: 'user created!',
-                result: result
-            });
-        })
-        .catch(err => {
-            res.status(500).json({
-                error:err
-            });
+        user.save((err, response)=>{
+            if(err) res.status(400).send(err)
+            res.status(200).send(response)
+        });
+        console.log(user);
         });
     });
-  });
+
+// router.post('/signup', (req, res, next) => {
+//     bcrypt.hash(req.body.password, 10)
+//     .then(hash => {
+//         const user = new Users({
+//             username: req.body.username,
+//             password: hash,
+//             email: req.body.email
+//         });
+//         user.save()
+//         .then(result => {
+//             res.status(201).json({
+//                 message: 'user created!',
+//                 result: result
+//             });
+//         })
+//         .catch(err => {
+//             res.status(500).json({
+//                 error: err
+//             });
+//         });
+//     });
+//   });
 
 //Log in 
 
@@ -42,7 +71,7 @@ router.post('/login', function(req, res, next) {
             });
         }
         let fetchedUser = user;
-        return bcrypt.compare(req.body.password, user.password)
+        return bcrypt.compare(req.body.password, user.password);
     })
     .then(result => {
         if (!result) {
@@ -67,14 +96,18 @@ router.post('/login', function(req, res, next) {
   });
 
 //GET profile page
-router.get('/profile/:id', function(req, res, next) {
-    res.send('respond with a resource');
-  });
+// router.get('/profile/:id', function(req, res, next) {
+//     res.send('respond with a resource');
+//   });
 
 //log out
 
-router.post('/logout', function(req, res, next) {
-    res.send('respond with a resource');
+// router.post('/logout', function(req, res, next) {
+//     res.send('respond with a resource');
+//   });
+
+router.get('/', function(req, res) {
+    console.log('You successfully created a GET route!');
   });
 
 module.exports = router;

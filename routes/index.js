@@ -5,7 +5,9 @@ const app = express();
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
+  res.send('a get response');
 });
+
+
 
 module.exports = router;
