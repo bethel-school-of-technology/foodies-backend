@@ -5,9 +5,9 @@ const checkAuth = require("../middleware/check-auth");
 
 const PersonalRecipes = require('../models/Recipes');
 
-//GET list of Personal Recipes
+//GET list of Personal Recipes (add CheckAuth middleware?)
 
-router.get('/all', checkAuth, (req, res, next) => {
+router.get('/all', (req, res, next) => {
   PersonalRecipes.find().then(documents => {
     res.status(200).json({
       message: "Recipes fetched successfully",
@@ -17,20 +17,6 @@ router.get('/all', checkAuth, (req, res, next) => {
 });
 
 //CREATE a personal recipe
-
-// router.post("/createdRecipe", (req, res, next) => {
-//   const PersonalRecipe = new PersonalRecipes({
-//     title: req.body.title,
-//     ingredients: req.body.ingredients,
-//     directions: req.body.directions
-//   });
-//   PersonalRecipe.save().then(createdRecipe => {
-//     res.status(201).json({
-//       message: "Recipe added successfully",
-//       recipeId: createdRecipe._id
-//     });
-//   });
-// });
 
 router.post("/createdRecipe", (req, res, next) => {
   const PersonalRecipe = new PersonalRecipes({
@@ -47,20 +33,10 @@ console.log(PersonalRecipe);
 
 //Get one personal Recipe
 
-// router.get("/:id", checkAuth, (req, res, next) => {
-//   PersonalRecipe.findById(req.params._id).then(recipe => {
-//     if (recipe) {
-//       res.status(200).json(recipe);
-//     } else {
-//       res.status(404).json({message: "Recipe not found!"});
-//     }
-//   });
-// });
-
-router.get("/:id", (req, res, next) => {
-  PersonalRecipe.findById(req.params._id).then(recipe => {
+router.get("/:_id", (req, res, next) => {
+  PersonalRecipes.findById(req.params._id).then(recipe => {
     if (recipe) {
-      console.log(recipe);
+      res.status(200).json(recipe);
     } else {
       res.status(404).json({message: "Recipe not found!"});
     }

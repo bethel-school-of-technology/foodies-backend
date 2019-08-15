@@ -61,42 +61,92 @@ router.post('/signup', (req, res) => {
 //   });
 
 //Log in 
+// router.post('/login', function(req, res, next) {
+//     let fetchedUser;
+//     Users.findOne({ email: req.body.email }).then(user => {
+//         if (!user) {
+//             return res.status(401).json({
+//                 message:"Auth Failed"
+//             });
+//         }
+//         let fetchedUser = user;
+//         return bcrypt.compare(req.body.password, user.password);
+//     })
+//     .then(result => {
+//         if (!result) {
+//             return res.status(401).json({
+//                 message: "Auth Failed"
+//              });
+//         }
+//         const token = jwt.sign(
+//             {username: fetchedUser.username, userId: fetchedUser._id}, 
+//             process.env.SECRET,
+//         { expiresIn: '1h' }
+//         );
+//         res.status(200).json({
+//             token: token
+//         });
+//     })
+//     .catch(err => {
+//         return res.status(401).json({
+//             message: "Auth Failed"
+//         });
+//     });
+//   });  
 
-router.post('/login', function(req, res, next) {
-    let fetchedUser;
-    Users.findOne({ email: req.body.email }).then(user => {
+//   router.post('/login', function(req, res, next) {
+//     Users.findOne({ email: req.body.email, username: req.body.username}).then(user => {
+//         if (!user) {
+//             return res.status(401).json({
+//                 message:"Auth Failed"
+//             });
+//         };
+//         if (bcrypt.compare(req.body.password, user.password)) {
+//             const token = jwt.sign(
+//                 {username: user.username, userId: user._id}, 
+//                 process.env.SECRET,
+//             { expiresIn: '1h' }
+//             );
+//             res.status(200).json({
+//                 token: token
+//             });
+//         } else {
+//             return res.status(401).json({
+//                 message: "auth failed"
+//             });
+//         }
+//     });
+//   });
+
+  router.post('/login', function(req, res, next) {
+    Users.findOne({ email: req.body.email, username: req.body.username}).then(user => {
         if (!user) {
             return res.status(401).json({
                 message:"Auth Failed"
             });
-        }
-        let fetchedUser = user;
-        return bcrypt.compare(req.body.password, user.password);
-    })
-    .then(result => {
-        if (!result) {
-            return res.status(401).json({
-                message: "Auth Failed"
-             });
-        }
-        const token = jwt.sign(
-            {username: fetchedUser.username, userId: fetchedUser._id}, 
-            process.env.SECRET,
-        { expiresIn: '1h' }
-        );
-        res.status(200).json({
-            token: token
+        };
+
+        bcrypt.compare(req.body.password, user.password, (response, err) => {
+            if(err){
+                return res.status(401).json({
+                    message:"Auth Failed"
+               });
+            }
+
+            const token = jwt.sign(
+                {username: user.username, userId: user._id}, 
+                process.env.SECRET,
+            { expiresIn: '1h' }
+            );
+            res.status(200).json({
+                token: token
+            })
         });
     })
-    .catch(err => {
-        return res.status(401).json({
-            message: "Auth Failed"
-        });
-    });
-  });
+});
 
 //GET profile page
-// router.get('/profile/:id', function(req, res, next) {
+// router.get('/profile/:id', function(req, res, next) 
 //     res.send('respond with a resource');
 //   });
 
