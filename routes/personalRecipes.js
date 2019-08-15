@@ -5,7 +5,7 @@ const checkAuth = require("../middleware/check-auth");
 
 const PersonalRecipes = require('../models/Recipes');
 
-//GET list of Personal Recipes (add CheckAuth middleware?)
+//GET list of Personal Recipes *****ADD CHECKAUTH? find(where userid === auth userid from jwt?)
 
 router.get('/all', (req, res, next) => {
   PersonalRecipes.find().then(documents => {
@@ -16,7 +16,7 @@ router.get('/all', (req, res, next) => {
   });
 });
 
-//CREATE a personal recipe
+//CREATE a personal recipe ****(save userid??)
 
 router.post("/createdRecipe", (req, res, next) => {
   const PersonalRecipe = new PersonalRecipes({
@@ -31,7 +31,7 @@ router.post("/createdRecipe", (req, res, next) => {
 console.log(PersonalRecipe);
 });
 
-//Get one personal Recipe
+//Get one personal Recipe *****ADD CHECKAUTH? (where user === auth user?)
 
 router.get("/:_id", (req, res, next) => {
   PersonalRecipes.findById(req.params._id).then(recipe => {
@@ -43,7 +43,7 @@ router.get("/:_id", (req, res, next) => {
   });
 });
 
-//DELETE a personal recipe 
+//DELETE a personal recipe (where user === auth user?)
 
 router.delete('/:id', (req, res) => {
   PersonalRecipes.deleteOne({ _id: req.params.id }).then(result => {

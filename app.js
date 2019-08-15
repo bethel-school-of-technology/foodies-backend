@@ -6,7 +6,6 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 const mongoose = require("mongoose");
-var indexRouter = require('./routes/index');
 var recipesRouter = require('./routes/personalRecipes');
 var usersRouter = require('./routes/users');
 var favoriteRouter = require('./routes/favoriteRecipes');
@@ -40,7 +39,6 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 // app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
 app.use('/api/personalRecipes', recipesRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/favoriteRecipes', favoriteRouter);

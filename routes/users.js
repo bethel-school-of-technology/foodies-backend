@@ -51,10 +51,7 @@ router.post('/signup', (req, res) => {
     });
   });
 
-//GET profile page
-// router.get('/profile/:id', checkAuth function(req, res, next) 
-//     res.send('respond with a resource');
-//   });
+//GET profile page *****ADD CHECKAUTH?
 
 router.get("/profile/:_id", (req, res, next) => {
     Users.findById(req.params._id).then(user => {
@@ -72,8 +69,5 @@ router.get("/profile/:_id", (req, res, next) => {
 //     res.send('respond with a resource');
 //   });
 
-router.get('/', function(req, res) {
-    console.log('You successfully created a GET route!');
-  });
 
 module.exports = router;
