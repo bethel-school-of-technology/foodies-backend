@@ -6,11 +6,11 @@ const FavoriteRecipesSchema = new Schema({
         type: String, 
         required: true 
     },
-    userId: { 
+    userId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Users",
         required: true
-    }
+      }
   });
   
   module.exports = mongoose.model('FavoriteRecipes', FavoriteRecipesSchema);

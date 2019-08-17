@@ -2,17 +2,17 @@ var express = require('express');
 var router = express.Router();
 const checkAuth = require("../middleware/check-auth");
 
-const favoriteRecipes = require('../models/favoriteRecipes');
+const FavoriteRecipes = require('../models/favoriteRecipes');
 
-//CREATE a favorite recipe "favorite a recipe" recipe_id ; user._id
-// how do i get recipe_id from frontend? How do I get userid from jwt?
+//CREATE a favorite recipe "favorite a recipe"
+// how do i get recipe_id from frontend? 
+// needed: recipe_id from the frontend. 
 
-router.post("/favorite", (request, response, next) => {
-  const FavoriteRecipe = new favoriteRecipes({
-    recipeId: req.params.recipe_id,
-    userId: req.params.user._id // use jwt token for this instead of req.params...
+router.post("/favorite", checkAuth, (req, res, next) => {
+  const FavoriteRecipe = new FavoriteRecipes({
+    recipeId: req.body.recipe_id,
+    userId: req.userData.userId
   });
-
   FavoriteRecipe.save((err, response)=>{
     if(err) res.status(400).send(err)
     res.status(200).send(response)
@@ -26,8 +26,8 @@ console.log(FavoriteRecipe);
 
 //GET list of favorited recipes
 
-router.get('/all', (req, res, next) => {
-    FavoriteRecipes.find().then(documents => {
+router.get('/all', checkAuth, (req, res, next) => {
+    FavoriteRecipes.find({userId: req.userData.userId}).then(documents => {
       res.status(200).json({
         message: "Recipes fetched successfully",
         recipes: documents
@@ -48,8 +48,8 @@ router.get('/all', (req, res, next) => {
 
 //GET one favorite recipe where user ==== auth user from jwt?
 
-router.get("/:_id", (req, res, next) => {
-  favoriteRecipes.findById(req.params._id).then(recipe => {
+router.get("/:_id", checkAuth, (req, res, next) => {
+  FavoriteRecipes.findById(req.params._id).then(recipe => {
     if (recipe) {
       res.status(200).json(recipe);
     } else {

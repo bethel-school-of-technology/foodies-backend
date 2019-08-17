@@ -23,9 +23,9 @@ app.use((req, res, next) => {
     "Access-Control-Allow-Methods", 
     "GET, POST, PATCH, DELETE, PUT, OPTIONS"
   );
-  res.setHeader(
-    "Authorization", "Bearer" + jwt
-  );
+  // res.setHeader(
+  //   "Authorization", "Bearer" + jwt
+  // ); not needed. 
   next();
 });
 //process.env.DATABASE_PATH
