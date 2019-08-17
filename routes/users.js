@@ -4,7 +4,6 @@ var router = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const checkAuth = require("../middleware/check-auth");
-
 var Users = require('../models/users');
 
 //Sign up (CREATE user)
@@ -36,7 +35,7 @@ router.post('/signup', (req, res) => {
         };
         if (bcrypt.compare(req.body.password, user.password)) {
             const token = jwt.sign(
-                {username: user.username, userId: user._id}, 
+                {userId: user._id}, 
                 process.env.SECRET,
             { expiresIn: '1h' }
             );
@@ -51,9 +50,9 @@ router.post('/signup', (req, res) => {
     });
   });
 
-//GET profile page *****ADD CHECKAUTH?
+//GET profile page
 
-router.get("/profile/:_id", (req, res, next) => {
+router.get("/profile/:_id", checkAuth, (req, res, next) => {
     Users.findById(req.params._id).then(user => {
       if (user) {
         res.status(200).json(user);
@@ -62,12 +61,5 @@ router.get("/profile/:_id", (req, res, next) => {
       }
     });
   });
-
-//log out
-
-// router.post('/logout', function(req, res, next) {
-//     res.send('respond with a resource');
-//   });
-
 
 module.exports = router;

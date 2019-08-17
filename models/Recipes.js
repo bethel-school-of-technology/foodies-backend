@@ -13,6 +13,11 @@ const PersonalRecipesSchema = new Schema({
   directions: { 
     type: String, 
     required: true 
+  },
+  userId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Users",
+    required: true
   }
 });
 

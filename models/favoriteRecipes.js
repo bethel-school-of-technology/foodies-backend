@@ -7,8 +7,9 @@ const FavoriteRecipesSchema = new Schema({
         required: true 
     },
     userId: { 
-        type: String, 
-        required: true 
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Users",
+        required: true
     }
   });
   

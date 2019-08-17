@@ -4,13 +4,13 @@ const checkAuth = require("../middleware/check-auth");
 
 const favoriteRecipes = require('../models/favoriteRecipes');
 
-//CREATE a favorite recipe "favorite a recipe" recipe_id ; personalrecipes._id
+//CREATE a favorite recipe "favorite a recipe" recipe_id ; user._id
 // how do i get recipe_id from frontend? How do I get userid from jwt?
 
 router.post("/favorite", (request, response, next) => {
   const FavoriteRecipe = new favoriteRecipes({
     recipeId: req.params.recipe_id,
-    userId: req.params.user._id 
+    userId: req.params.user._id // use jwt token for this instead of req.params...
   });
 
   FavoriteRecipe.save((err, response)=>{
