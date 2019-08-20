@@ -52,8 +52,8 @@ router.post('/signup', (req, res) => {
 
 //GET profile page
 
-router.get("/profile/:_id", checkAuth, (req, res, next) => {
-    Users.findById(req.params._id).then(user => {
+router.get("/profile/", checkAuth, (req, res, next) => {
+    Users.findById(req.userData.userId).then(user => {
       if (user) {
         res.status(200).json(user);
       } else {

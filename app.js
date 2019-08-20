@@ -28,7 +28,7 @@ app.use((req, res, next) => {
   // ); not needed. 
   next();
 });
-//process.env.DATABASE_PATH
+
 mongoose.connect(process.env.DATABASE_PATH, { useNewUrlParser: true })
   .then(() => {
     console.log('Connected to database!');
@@ -41,7 +41,6 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.json());
-// app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api/personalRecipes', recipesRouter);
 app.use('/api/users', usersRouter);

@@ -5,16 +5,6 @@ const checkAuth = require("../middleware/check-auth");
 
 const PersonalRecipes = require('../models/Recipes');
 
-//GET list of Personal Recipes 
-
-router.get('/all', checkAuth, (req, res, next) => {
-  PersonalRecipes.find({userId: req.userData.userId}).then(documents => {
-    res.status(200).json({
-      message: "Recipes fetched successfully",
-      recipes: documents
-    });
-  });
-});
 
 //CREATE a personal recipe 
 
@@ -32,7 +22,18 @@ router.post("/createdRecipe", checkAuth, (req, res, next) => {
 console.log(PersonalRecipe);
 });
 
-//Get one personal Recipe 
+//GET list of Personal Recipes 
+
+router.get('/all', checkAuth, (req, res, next) => {
+  PersonalRecipes.find({userId: req.userData.userId}).then(documents => {
+    res.status(200).json({
+      message: "Recipes fetched successfully",
+      recipes: documents
+    });
+  });
+});
+
+//GET one personal Recipe 
 
 router.get("/:_id", checkAuth, (req, res, next) => {
   PersonalRecipes.findById(req.params._id).then(recipe => {
